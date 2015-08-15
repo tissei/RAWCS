@@ -1,2 +1,2 @@
 class InputReader:
-	
+	pass
