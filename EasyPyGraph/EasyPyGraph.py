@@ -1,5 +1,4 @@
 # coding=utf-8
-# coding=utf-8
 """
 PyGraph - github.com/alleen94/EasyPyGraph
 ~~~~~~~~~~~~~
