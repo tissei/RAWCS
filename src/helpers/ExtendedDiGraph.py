@@ -1,4 +1,4 @@
-from EasyPyGraph.EasyPyGraph import DiGraph
+from libs.EasyPyGraph.EasyPyGraph import DiGraph
 
 
 class ExtendedDiGraph(DiGraph):

@@ -54,7 +54,7 @@ class RAWCS:
         :return: Instance of Problem
         :rtype: Problem
         """
-        if not self.graph.adjList:
+        if any(self.graph.adjList):
             allocation = Problem()
             registers_list = [str(n) for n in range(0, self.registers)]
             print 'registers_list: ', registers_list
