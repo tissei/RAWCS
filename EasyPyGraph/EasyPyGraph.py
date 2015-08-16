@@ -1,10 +1,11 @@
-
+# coding=utf-8
+# coding=utf-8
 """
 PyGraph - github.com/alleen94/EasyPyGraph
 ~~~~~~~~~~~~~
 PyGraph is a python library that supports digraph and graph data structure.
 WARNING! This is a prototype.
-Copyright 2014 José Carlos S.A. Tissei and Lucas de Oliveira Teixeira
+Copyright 2014 JosÃ© Carlos S.A. Tissei and Lucas de Oliveira Teixeira
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
@@ -194,7 +195,7 @@ class DiGraph:
     def depthFirstSearch(self, start):
         visited = []
         queue = [start]
-        while lista:
+        while queue:
             t = queue.pop()
             if t not in visited:
                 visited.append(t)
@@ -214,7 +215,7 @@ class DiGraph:
     """
     
     def areConected(self, start, end):
-         return end in self.depthSearch(start) 
+        return end in self.depthFirstSearch(start)
     
     """
     Verifies if a vertex can be reached back starting from its neighbors
@@ -228,7 +229,7 @@ class DiGraph:
     
     def hasCicle(self, vertex):
         for adjacent in self.adjList[vertex]:
-            if vertex in self.depthSearch(adjacent): return False
+            if vertex in self.depthFirstSearch(adjacent): return False
         return True
     
     """
@@ -320,7 +321,7 @@ class DiGraph:
                                     checkAdj = False
                                     break
                     if checkAdj:
-                        coloredGraph[vertice] = color
+                        coloredGraph[vertex] = color
                         break
         if None in coloredGraph: return False
         return True
@@ -331,7 +332,7 @@ class DiGraph:
     path costs, producing a shortest path tree.
     
     puts the initial vertex on ways, the weight 0 and the way transversed
-    until now(only the initil vertex), initiate an iteration that continues
+    until now(only the initial vertex), initiate an iteration that continues
     to execute until ways is empty, when the iteration begins, remove the
     vertex with the lower value from ways and its weight,then assign to last
     the last visited vertex from the removed vertex from ways, then assign to
@@ -359,7 +360,7 @@ class DiGraph:
     
         
     """
-    The Bellman–Ford algorithm is an algorithm that computes shortest paths 
+    The Bellmanâ€“Ford algorithm is an algorithm that computes shortest paths 
     from a single source vertex to all of the other vertices. It is slower 
     than Dijkstra's algorithm for the same problem, but more versatile, as 
     it is capable of handling graphs in which some of 
@@ -402,7 +403,7 @@ class DiGraph:
         return dist
 
     """
-    The Floyd–Warshall algorithm is a graph analysis algorithm for finding 
+    The Floydâ€“Warshall algorithm is a graph analysis algorithm for finding 
     shortest paths in a weighted graph with positive or negative edge weights 
     (but with no negative cycles). A single execution of the algorithm will 
     find the lengths (summed weights) of the shortest paths between all pairs 
