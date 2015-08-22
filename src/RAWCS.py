@@ -19,7 +19,7 @@ Copyright 2015 José Carlos S.A. Tissei and Lucas de Oliveira Teixeira
 from constraint import *
 
 class RAWCS:
-    def __init__(self, registers, graph):
+    def __init__(self, registers, graph, solver=RecursiveBacktrackingSolver):
         """
         RAWCS class constructor
 
@@ -31,6 +31,7 @@ class RAWCS:
         self.graph = graph
         self.registers = registers
         self.spilledOut = []
+        self.solver = solver
 
     def allocate(self):
         """
@@ -39,12 +40,12 @@ class RAWCS:
         :return: List with allocations or None is case there's no possible allocation
         :rtype: [{str: int}] or None
         """
-        solution = self.prepare().getSolutions()
-        while solution == []:
+        solution = self.prepare().getSolution()
+        while solution == [] or solution == None:
             print solution
             print self.graph
             self.spill()
-            solution = self.prepare().getSolutions()
+            solution = self.prepare().getSolution()
         return solution
 
     def prepare(self):
@@ -55,11 +56,11 @@ class RAWCS:
         :rtype: Problem
         """
         if any(self.graph.adjList):
-            allocation = Problem()
+            allocation = Problem(self.solver())
             registers_list = [str(n) for n in range(0, self.registers)]
-            print 'registers_list: ', registers_list
+            # print 'registers_list: ', registers_list
             vars_list = [var for var in self.graph.adjList]
-            print 'vars_list: ', vars_list
+            # print 'vars_list: ', vars_list
             allocation.addVariables(vars_list, registers_list)
             for var in vars_list:
                 for adjacent in self.graph.adjList[var]:
