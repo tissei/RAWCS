@@ -60,29 +60,13 @@ class RAWCS:
             print 'registers_list: ', registers_list
             vars_list = [var for var in self.graph.adjList]
             print 'vars_list: ', vars_list
-            allocation.addVariables(registers_list, vars_list)
-            allocation.addConstraint(AllDifferentConstraint())
-            allocation.addConstraint(self.liveRangeConstraint, registers_list)
+            allocation.addVariables(vars_list, registers_list)
+            for var in vars_list:
+                for adjacent in self.graph.adjList[var]:
+                    allocation.addConstraint(AllDifferentConstraint(), [var, adjacent])
             return allocation
         return None
 
-    def liveRangeConstraint(self, *domain):
-        """
-        Constraint of the live range problem
-
-        :param domain: Set of domain values to verify
-        :type domain: ()
-        :return: Boolean representing that the given domain satisfies the live range constraint
-        :rtype: bool
-        """
-        print 'domain', domain
-        for vertex in domain:
-            adjacent_list = [adjacent for adjacent in self.graph.adjList[vertex]]
-            verify_allocation = [adjacent in domain for adjacent in adjacent_list]
-            not_allocated = [allocated for allocated in verify_allocation if not allocated]
-            if not_allocated:
-                return False
-        return True
 
     def spill(self):
         """

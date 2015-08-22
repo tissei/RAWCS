@@ -1,16 +1,18 @@
 from src.RAWCS import RAWCS
 from src.helpers.ExtendedDiGraph import ExtendedDiGraph
 
-#	 	 ( 0 )
+#	 	 ( 0 ) 0
 #		 /   \
 #		/	  \
-#  ( 1 ) ----- ( 2 )
+#  ( 1 ) 2 ----- ( 2 ) 1
 #		\	  /
 #		 \   /
-# 		 ( 3 )
+# 		 ( 3 ) 0
 #		/
 #	   /
-#  ( 4 ) ----- ( 5 )
+#  ( 4 ) 2 ----- ( 5 ) 1
+
+# [{0: '0', 1: '2', 2: '1', 3: '0', 4: '2', 5: '1'}
 
 graph = ExtendedDiGraph()
 graph.addEdge(0, 1)
