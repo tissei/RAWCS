@@ -33,6 +33,6 @@ graph.addEdge(5, 4)
 
 with Timer(iterations=50000, verbose=True) as timer:
     for i in range(1, 50000):
-        RAWCS(3, graph).allocate()
+        RAWCS(3, graph).allocation()
 
-print RAWCS(3, graph).allocate()
+print RAWCS(3, graph).allocation()

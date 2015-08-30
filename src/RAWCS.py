@@ -33,22 +33,41 @@ class RAWCS:
         self.spilledOut = []
         self.solver = solver
 
-    def allocate(self):
+    def _allocate(self, singleSolution=True):
         """
         Tries to allocate the interference graph variables into the available registers
 
-        :return: List with allocations or None is case there's no possible allocation
-        :rtype: [{str: int}] or None
+        :return: List of the found allocation or the first valid allocation found,
+                 returns None in case there's no possible allocation.
+        :rtype: [{str: int}], {str: int} or None
         """
-        solution = self.prepare().getSolution()
+        solution = self._prepare().getSolution() if singleSolution else self._prepare().getSolutions()
         while solution == [] or solution == None:
             print solution
             print self.graph
-            self.spill()
-            solution = self.prepare().getSolution()
+            self._spill()
+            solution = self._prepare().getSolution() if singleSolution else self._prepare().getSolutions()
         return solution
 
-    def prepare(self):
+    def allocation(self):
+        """
+        Return the first valid allocation found
+
+        :return: The first valid allocation found or None if there's no possible allocation
+        :rtype : {str: int} or None
+        """
+        return self._allocate()
+
+    def allocations(self):
+        """
+        Return the list with all the valid allocations found
+
+        :return: List with allocations or None is case there's no possible allocation
+        :rtype : [{str: int}] or None
+        """
+        return self._allocate(singleSolution=False)
+
+    def _prepare(self):
         """
         Creates an python-constraint problem adding variables, domain and constraints
 
@@ -68,8 +87,7 @@ class RAWCS:
             return allocation
         return None
 
-
-    def spill(self):
+    def _spill(self):
         """
         Spill the variable out to be stored on memory
         """
