@@ -1,6 +1,5 @@
 from libs.EasyPyGraph.EasyPyGraph import DiGraph
 
-
 class ExtendedDiGraph(DiGraph):
 
     def maxOutputDegree(self):

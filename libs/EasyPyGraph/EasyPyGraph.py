@@ -22,7 +22,8 @@ Copyright 2014 José Carlos S.A. Tissei and Lucas de Oliveira Teixeira
 import heapq
 
 
-class DiGraph:
+class DiGraph(object):
+
     def __init__(self):
         self.adjList = {}
 
