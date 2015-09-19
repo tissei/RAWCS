@@ -74,9 +74,9 @@ class RAWCS:
         """
         if any(self.graph.adjList):
             allocation = Problem(self.solver())
-            registers_list = [str(n) for n in range(0, self.registers)]
+            registers_list = ['R' + str(n) for n in range(0, self.registers)]
             # print 'registers_list: ', registers_list
-            vars_list = [str(var) for var in self.graph.adjList]
+            vars_list = [var for var in self.graph.adjList]
             # print 'vars_list: ', vars_list
             allocation.addVariables(vars_list, registers_list)
             for var in vars_list:

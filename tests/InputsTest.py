@@ -1,3 +1,4 @@
+import copy
 import unittest
 
 from src.RAWCS import RAWCS
@@ -18,9 +19,10 @@ class InputsTest(unittest.TestCase):
             average_time = 0
             spills_amount = 0
             final_allocation = None
+            vertex_amount = graph.nodes
             for i in range(1, iterations):
                 with Timer(iterations=iterations) as timer:
-                    allocator = RAWCS(registers, graph)
+                    allocator = RAWCS(registers, copy.deepcopy(graph))
                     allocation = allocator.allocation()
                 total_time += timer.msecs
                 if i == iterations - 1:
@@ -32,5 +34,6 @@ class InputsTest(unittest.TestCase):
             print 'iterations amount: ', iterations
             print 'total spent time: ', total_time * 0.001, ' seconds'
             print 'average spent time: ', average_time * 0.001, ' seconds'
+            print 'amount of vertexes: ', vertex_amount
             print 'amount of spills needed: ', spills_amount
             print 'suggested allocation: ', final_allocation
