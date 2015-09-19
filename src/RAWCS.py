@@ -1,6 +1,6 @@
 # coding=utf-8
 """
-RAWCS - github.com/alleen94/RAWCS
+RAWCS - github.com/tissei/RAWCS
 ~~~~~~~~~~~~~
 WARNING! This is a prototype.
 Copyright 2015 José Carlos S.A. Tissei and Lucas de Oliveira Teixeira
