@@ -42,12 +42,15 @@ class RAWCS:
         :rtype: [{str: int}], {str: int} or None
         """
         solution = self._prepare().getSolution() if singleSolution else self._prepare().getSolutions()
+        print "1st try"
         while solution == [] or solution == None:
             self._spill()
+            print "spill"
             solution = self._prepare().getSolution() if singleSolution else self._prepare().getSolutions()
+            print "try"
         return solution
 
-    def allocation(self):
+    def getAllocation(self):
         """
         Return the first valid allocation found
 
@@ -56,7 +59,7 @@ class RAWCS:
         """
         return self._allocate()
 
-    def allocations(self):
+    def getAllocations(self):
         """
         Return the list with all the valid allocations found
 
@@ -72,7 +75,9 @@ class RAWCS:
         :return: Instance of Problem
         :rtype: Problem
         """
+        print "prepare"
         if any(self.graph.adjList):
+            #self._preSpill()
             allocation = Problem(self.solver())
             registers_list = ['R' + str(n) for n in range(0, self.registers)]
             # print 'registers_list: ', registers_list
@@ -85,10 +90,25 @@ class RAWCS:
             return allocation
         return None
 
-    def _spill(self):
+    def _spill(self, vertex = None):
         """
-        Spill the variable out to be stored on memory
+        Finds the vertex with the highest output degree
+        and spill it out to the memory
+
+        :param vertex: Vertex to be removed from the graph
         """
-        most_dependent = self.graph.maxOutputDegree()
-        self.spilledOut.append(most_dependent)
-        self.graph.removeVertex(most_dependent)
+        if not vertex:
+            vertex = self.graph.maxOutputDegree()
+        self.spilledOut.append(vertex)
+        self.graph.removeVertex(vertex)
+
+    def _preSpill(self):
+        """
+        Executes an pre spill process searching for vertex which
+        the output degree is to high to have an possible allocation
+        then executes the spill process on then
+        """
+        outputDegrees = self.graph.allGraphOutputDegrees()
+        for vertex in outputDegrees:
+            if outputDegrees[vertex] > self.registers:
+                self._spill(vertex)

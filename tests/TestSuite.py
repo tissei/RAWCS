@@ -5,7 +5,8 @@ from tests.InputsTest import InputsTest
 
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(InputsTest("testQueenInputsWithSingleAllocation"))
+    #suite.addTest(InputsTest("testInputsWithSingleAllocation"))
+    suite.addTest(InputsTest("testAllocationPerformance"))
     return suite
 
 

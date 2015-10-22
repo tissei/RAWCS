@@ -1,4 +1,5 @@
 import copy
+import sys
 
 from src.ExtendedDiGraph import ExtendedDiGraph
 from src.RAWCS import RAWCS
@@ -38,8 +39,9 @@ graph.addEdge(5, 4)
 
 with Timer(iterations=10, verbose=True) as timer:
     for i in range(1, 10):
-        RAWCS(2, copy.deepcopy(graph)).allocation()
+        RAWCS(2, copy.deepcopy(graph)).getAllocation()
 
-allocator = RAWCS(2, graph)
-print allocator.allocation()
+allocator = RAWCS(registers=3, graph=graph)
+print allocator.getAllocation()
 print allocator.spilledOut
+print (sys.version)

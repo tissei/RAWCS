@@ -10,3 +10,12 @@ class ExtendedDiGraph(DiGraph):
         :rtype: int
         """
         return max({vertex: self.outputDegree(vertex) for vertex in self.adjList})
+
+    def allGraphOutputDegrees(self):
+        """
+        Calculate the output degree of all vertexes in the graph
+
+        :return: Dict with all the output degrees from the graph vertexes
+        :rtype: {}
+        """
+        return {vertex: self.outputDegree(vertex) for vertex in self.adjList}
