@@ -42,12 +42,12 @@ class RAWCS:
         :rtype: [{str: int}], {str: int} or None
         """
         solution = self._prepare().getSolution() if singleSolution else self._prepare().getSolutions()
-        print "1st try"
+        #print "1st try"
         while solution == [] or solution == None:
             self._spill()
-            print "spill"
+            #print "spill"
             solution = self._prepare().getSolution() if singleSolution else self._prepare().getSolutions()
-            print "try"
+            #print "try"
         return solution
 
     def getAllocation(self):
@@ -75,7 +75,7 @@ class RAWCS:
         :return: Instance of Problem
         :rtype: Problem
         """
-        print "prepare"
+        #print "prepare"
         if any(self.graph.adjList):
             #self._preSpill()
             allocation = Problem(self.solver())
