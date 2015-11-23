@@ -1,6 +1,4 @@
-import copy
 import unittest
-from constraint import RecursiveBacktrackingSolver, MinConflictsSolver, BacktrackingSolver
 
 from src.RAWCS import RAWCS
 from src.helpers.InputReader import InputReader
@@ -11,75 +9,38 @@ class InputsTest(unittest.TestCase):
 
     inputs_folder = "..\src\inputs\\"
 
-    # def testInputsWithSingleAllocation(self):
-    #     inputs = [
-    #         {'input': 'le450_15c.col', 'k': 3},
-    #         {'input': 'le450_15d.col', 'k': 3},
-    #         {'input': 'le450_25c.col', 'k': 3},
-    #         {'input': 'le450_25d.col', 'k': 3}
-    #     ]
-    #     # inputs = ['flat1000_76_0.col', 'flat300_28_0.col']
-    #     iterations = 10
-    #     for input in inputs:
-    #         print input['input']
-    #         print input['k']
-    #         graph = InputReader.read(self.inputs_folder + input['input'])
-    #         total_time = 0
-    #         average_time = 0
-    #         spills_amount = 0
-    #         final_allocation = None
-    #         vertex_amount = graph.nodes
-    #         for i in range(1, iterations):
-    #             print 'new test: ', graph.nodes
-    #             with Timer(iterations=iterations) as timer:
-    #                 allocator = RAWCS(input['k'], copy.deepcopy(graph))
-    #                 allocation = allocator.getAllocation()
-    #             total_time += timer.msecs
-    #             if i == iterations - 1:
-    #                 average_time = total_time / iterations
-    #                 spills_amount = len(allocator.spilledOut)
-    #                 final_allocation = allocation
-    #         print '---'
-    #         print 'input file: ', input['input']
-    #         print 'k: ', input['k']
-    #         print 'iterations amount: ', iterations
-    #         print 'total spent time: ', total_time * 0.001, ' seconds'
-    #         print 'average spent time: ', average_time * 0.001, ' seconds'
-    #         print 'amount of vertexes: ', vertex_amount
-    #         print 'amount of spills needed: ', spills_amount
-    #         print 'suggested allocation: ', final_allocation
-
     def testAllocationPerformance(self):
+
         inputs = [
-             {'input': 'le450_15c.col', 'k': 3},
-             {'input': 'le450_15d.col', 'k': 3},
-             {'input': 'le450_25c.col', 'k': 3},
-             {'input': 'le450_25d.col', 'k': 3}
+            {'input': 'le450_15c.col'},
+            {'input': 'le450_15d.col'},
+            {'input': 'le450_25c.col'},
+            {'input': 'le450_25d.col'},
+            {'input': 'flat1000_76_0.col'},
+            {'input': 'flat300_28_0.col'}
         ]
+        iterations = 1
+        registersAmount = 5
 
-        #solvers = [RecursiveBacktrackingSolver, MinConflictsSolver, BacktrackingSolver]
-
-        iterations = 10
-        for j in range(2, 11):
-            for input in inputs:
-                graph = InputReader.read(self.inputs_folder + input['input'])
-                total_time = 0
-                average_time = 0
-                spills_amount = 0
-                vertex_amount = graph.nodes
-                edges_amount = graph.edges
-                with Timer(iterations=iterations) as timer:
-                    allocator = RAWCS(j, graph)
-                    allocator.getAllocation()
-                total_time += timer.msecs
-                average_time = total_time / iterations
-                spills_amount = len(allocator.spilledOut)
-                print '---'
-                print 'input file: ', input['input']
-                print 'k: ', j
-                print 'iterations amount: ', iterations
-                print 'total spent time: ', total_time * 0.001, ' seconds'
-                print 'average spent time: ', average_time * 0.001, ' seconds'
-                print 'amount of vertexes: ', vertex_amount
-                print 'amount of edges:', edges_amount
-                print 'amount of spills needed: ', spills_amount
+        for input in inputs:
+            graph = InputReader.read(self.inputs_folder + input['input'])
+            total_time = 0
+            average_time = 0
+            spills_amount = 0
+            vertex_amount = graph.nodes
+            edges_amount = graph.edges
+            with Timer(iterations=iterations) as timer:
+                allocator = RAWCS(registersAmount, graph)
+                allocator.getAllocation()
+            total_time += timer.secs
+            average_time = total_time / iterations
+            spills_amount = len(allocator.spilledOut)
+            print '---'
+            print 'input file: ', input['input']
+            print 'k: ', registersAmount
+            print 'iterations amount: ', iterations
+            print 'total spent time: ', total_time, ' seconds'
+            print 'average spent time: ', average_time, ' seconds'
+            print 'amount of vertexes: ', vertex_amount
+            print 'amount of edges:', edges_amount
+            print 'amount of spills needed: ', spills_amount

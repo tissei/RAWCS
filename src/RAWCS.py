@@ -42,12 +42,9 @@ class RAWCS:
         :rtype: [{str: int}], {str: int} or None
         """
         solution = self._prepare().getSolution() if singleSolution else self._prepare().getSolutions()
-        #print "1st try"
         while solution == [] or solution == None:
             self._spill()
-            #print "spill"
             solution = self._prepare().getSolution() if singleSolution else self._prepare().getSolutions()
-            #print "try"
         return solution
 
     def getAllocation(self):
@@ -75,14 +72,10 @@ class RAWCS:
         :return: Instance of Problem
         :rtype: Problem
         """
-        #print "prepare"
         if any(self.graph.adjList):
-            #self._preSpill()
             allocation = Problem(self.solver())
             registers_list = ['R' + str(n) for n in range(0, self.registers)]
-            # print 'registers_list: ', registers_list
             vars_list = [var for var in self.graph.adjList]
-            # print 'vars_list: ', vars_list
             allocation.addVariables(vars_list, registers_list)
             for var in vars_list:
                 for adjacent in self.graph.adjList[var]:

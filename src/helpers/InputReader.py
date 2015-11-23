@@ -4,11 +4,20 @@ from src.DIMACSGraph import DIMACSGraph
 
 
 class InputReader:
+
     edge = collections.namedtuple('edge', ['e', 'vertex', 'adjacent'])
     header = collections.namedtuple('edge', ['p', 'format', 'nodes', 'edges'])
 
     @staticmethod
     def read(file):
+        """
+        Read the DIMACS .col file and creates an new
+        DIMACSGraph instance that represents the graph
+        inside the file.
+
+        :param file: An DIMACS graph instance .col file
+        :return: new DIMACSGraph instance
+        """
         with open(file) as content:
             content_read = content.read()
             content_list = content_read[content_read.index('p edge'):].split('\n')
